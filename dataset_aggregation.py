@@ -73,3 +73,50 @@ print(sold["PropertyType"].unique())
 
 sold.to_csv('combined_sold.csv', index=False)
 print("successful")
+
+# find all the LISTING files
+all_listing = []
+for f in files:
+    if f.startswith('CRMLSListing'):
+        all_listing.append(f)
+
+# list all the normal version and filled version files in LISTING files
+normal_listing = []
+for f in all_listing:
+    if not f.endswith('_filled.csv'):
+        normal_listing.append(f)
+
+filled_listing = []
+for f in all_listing:
+    if f.endswith('_filled.csv'):
+        filled_listing.append(f)
+
+# keep the filled version
+files_listing = []
+for f in filled_listing:
+    files_listing.append(f)
+
+for f in normal_listing:
+    filled_name = f.replace('.csv', '_filled.csv')
+    if filled_name not in filled_listing:
+        files_listing.append(f)
+
+print(len(files_listing))
+
+# store all the listing files into listing_dfs
+listing_dfs = []
+for i in files_listing:
+    df = pd.read_csv("/workspaces/IDX_Summer_2026/csv/" + i)
+    listing_dfs.append(df)
+
+# concatenate all listing files
+listings = pd.concat(listing_dfs)
+print(listings.shape)
+
+# filter Residential only
+listings = listings[listings['PropertyType'] == 'Residential']
+print(len(listings))
+
+# save
+listings.to_csv('combined_listings.csv', index=False)
+print("successful")
