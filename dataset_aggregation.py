@@ -66,6 +66,7 @@ sold = sold.drop(columns=['latfilled', 'lonfilled'])
 print(sold.shape)
 
 print(sold["PropertyType"].unique())
+sold.to_csv('all_property_type_sold.csv', index=False)
 
 sold = sold[sold['PropertyType'] == 'Residential']
 print(len(sold))
@@ -112,6 +113,7 @@ for i in files_listing:
 # concatenate all listing files
 listings = pd.concat(listing_dfs)
 print(listings.shape)
+listings.to_csv('all_property_type_listings.csv', index=False)
 
 # filter Residential only
 listings = listings[listings['PropertyType'] == 'Residential']
