@@ -9,11 +9,13 @@ print(listings.shape)
 
 #it seems like there are some columns with same names like "livingArea" and "livingArea.1". I'm not sure how to deal with it.
 print(listings.columns)
+print(sold.columns)
 
 #the filtering logic applied
 print(sold['PropertyType'].unique())
 print(listings['PropertyType'].unique())
 
+# Null-count summary table
 nulls_counts_sold=sold.isnull().sum()
 print(nulls_counts_sold)
 
